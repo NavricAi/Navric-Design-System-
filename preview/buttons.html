@@ -1,0 +1,23 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:22px 26px;background:var(--canvas);color:var(--fg1);font-family:var(--font-sans);font-size:14px;-webkit-font-smoothing:antialiased}
+.lab{font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--fg3);margin:0 0 16px}
+.mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.row{display:flex;gap:14px;flex-wrap:wrap}
+[data-lucide]{width:1em;height:1em;stroke-width:1.75;vertical-align:middle}
+.hex{font-family:var(--font-mono);font-size:11.5px;color:var(--fg3);margin-top:7px;letter-spacing:-.01em}
+.nm{font-size:12.5px;font-weight:500;color:var(--fg1);margin-top:10px}
+.cap{font-size:11px;color:var(--fg3);margin-top:2px}
+</style></head><body class="navric">
+<p class="lab">Buttons</p>
+<div class="row" style="align-items:center">
+  <button style="display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:8px;font:500 14px/1 var(--font-sans);border:1px solid transparent;cursor:pointer;background:var(--indigo);color:#fff"><i data-lucide="bell-plus"></i> Add to watchlist</button>
+  <button style="display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:8px;font:500 14px/1 var(--font-sans);border:1px solid transparent;cursor:pointer;background:var(--indigo-hover);color:#fff"><i data-lucide="bell-plus"></i> Hover</button>
+  <button style="display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:8px;font:500 14px/1 var(--font-sans);border:1px solid transparent;cursor:pointer;background:var(--surface);color:var(--fg2);border-color:var(--border)"><i data-lucide="download"></i> Export brief</button>
+  <button style="display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:8px;font:500 14px/1 var(--font-sans);border:1px solid transparent;cursor:pointer;background:var(--indigo);color:#fff;opacity:.45;cursor:not-allowed">Disabled</button>
+  <span style="width:38px;height:38px;display:grid;place-items:center;border-radius:8px;border:1px solid var(--border);color:var(--fg2)"><i data-lucide="search"></i></span>
+</div>
+<p style="font-size:11.5px;color:var(--fg3);margin:16px 0 0">One primary (indigo) per screen. Everything else ghost/secondary.</p><script>lucide.createIcons();</script></body></html>

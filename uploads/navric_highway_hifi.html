@@ -1,0 +1,102 @@
+
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #080808; }
+  .stack { display: flex; flex-direction: column; gap: 3px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+  .cell { display: flex; align-items: center; justify-content: center; padding: 52px 40px; overflow: hidden; }
+  .dark  { background: #0c0f14; }
+  .white { background: #f5f5f5; }
+  .navy  { background: #0a1628; }
+  .label { font-size: 10px; letter-spacing: 3px; color: #2a2e38; text-align: center; padding: 10px 0 4px; text-transform: uppercase; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: #080808; }
+</style>
+<div class="stack">
+
+  <!-- ── COLORWAY 1: Black & White ── -->
+  <div class="label">Black &amp; White</div>
+  <div class="cell white">
+    <svg viewBox="0 0 560 110" xmlns="http://www.w3.org/2000/svg">
+      <!-- Road left edge -->
+      <line x1="55" y1="98" x2="82" y2="18" stroke="#111111" stroke-width="2"/>
+      <!-- Road right edge -->
+      <line x1="55" y1="98" x2="28" y2="18" stroke="#111111" stroke-width="2"/>
+      <!-- Road fill -->
+      <polygon points="55,98 82,18 28,18" fill="#e8e8e8"/>
+      <!-- Center dashes — black -->
+      <line x1="55" y1="92" x2="55" y2="76" stroke="#111111" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="55" y1="69" x2="55" y2="56" stroke="#111111" stroke-width="2" stroke-linecap="round" opacity=".6"/>
+      <line x1="55" y1="51" x2="55" y2="41" stroke="#111111" stroke-width="1.5" stroke-linecap="round" opacity=".35"/>
+      <line x1="55" y1="37" x2="55" y2="30" stroke="#111111" stroke-width="1" stroke-linecap="round" opacity=".18"/>
+      <!-- Vanishing point glow -->
+      <circle cx="55" cy="18" r="5" fill="#111111"/>
+      <circle cx="55" cy="18" r="10" fill="none" stroke="#111111" stroke-width="1" opacity=".2"/>
+      <!-- Divider -->
+      <line x1="126" y1="12" x2="126" y2="98" stroke="#cccccc" stroke-width="1"/>
+      <!-- Wordmark -->
+      <text x="148" y="58" font-size="46" font-weight="200" fill="#111111" letter-spacing="12" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif">NAVRIC</text>
+      <!-- Tagline -->
+      <text x="150" y="80" font-size="10" fill="#888888" letter-spacing="4" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif">RISK · INTELLIGENCE · COMPLIANCE</text>
+    </svg>
+  </div>
+  <div class="cell dark">
+    <svg viewBox="0 0 560 110" xmlns="http://www.w3.org/2000/svg">
+      <line x1="55" y1="98" x2="82" y2="18" stroke="#ffffff" stroke-width="2"/>
+      <line x1="55" y1="98" x2="28" y2="18" stroke="#ffffff" stroke-width="2"/>
+      <polygon points="55,98 82,18 28,18" fill="#141820"/>
+      <line x1="55" y1="92" x2="55" y2="76" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="55" y1="69" x2="55" y2="56" stroke="#ffffff" stroke-width="2" stroke-linecap="round" opacity=".55"/>
+      <line x1="55" y1="51" x2="55" y2="41" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" opacity=".3"/>
+      <line x1="55" y1="37" x2="55" y2="30" stroke="#ffffff" stroke-width="1" stroke-linecap="round" opacity=".15"/>
+      <circle cx="55" cy="18" r="5" fill="#ffffff"/>
+      <circle cx="55" cy="18" r="10" fill="none" stroke="#ffffff" stroke-width="1" opacity=".2"/>
+      <line x1="126" y1="12" x2="126" y2="98" stroke="#1e2533" stroke-width="1"/>
+      <text x="148" y="58" font-size="46" font-weight="200" fill="#ffffff" letter-spacing="12" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif">NAVRIC</text>
+      <text x="150" y="80" font-size="10" fill="#4a5568" letter-spacing="4" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif">RISK · INTELLIGENCE · COMPLIANCE</text>
+    </svg>
+  </div>
+
+  <!-- ── COLORWAY 2: Dark Blue ── -->
+  <div class="label">Dark Blue</div>
+  <div class="cell navy">
+    <svg viewBox="0 0 560 110" xmlns="http://www.w3.org/2000/svg">
+      <line x1="55" y1="98" x2="82" y2="18" stroke="#4a7fc1" stroke-width="2"/>
+      <line x1="55" y1="98" x2="28" y2="18" stroke="#4a7fc1" stroke-width="2"/>
+      <polygon points="55,98 82,18 28,18" fill="#0d1e3a"/>
+      <!-- Dashes in bright blue -->
+      <line x1="55" y1="92" x2="55" y2="76" stroke="#5b9bd5" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="55" y1="69" x2="55" y2="56" stroke="#5b9bd5" stroke-width="2" stroke-linecap="round" opacity=".65"/>
+      <line x1="55" y1="51" x2="55" y2="41" stroke="#5b9bd5" stroke-width="1.5" stroke-linecap="round" opacity=".38"/>
+      <line x1="55" y1="37" x2="55" y2="30" stroke="#5b9bd5" stroke-width="1" stroke-linecap="round" opacity=".2"/>
+      <!-- Vanishing point — bright blue -->
+      <circle cx="55" cy="18" r="5" fill="#5b9bd5"/>
+      <circle cx="55" cy="18" r="11" fill="none" stroke="#5b9bd5" stroke-width="1" opacity=".3"/>
+      <circle cx="55" cy="18" r="18" fill="none" stroke="#5b9bd5" stroke-width="0.6" opacity=".12"/>
+      <line x1="126" y1="12" x2="126" y2="98" stroke="#1a2d4a" stroke-width="1"/>
+      <text x="148" y="58" font-size="46" font-weight="200" fill="#e8f0fb" letter-spacing="12" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif">NAVRIC</text>
+      <text x="150" y="80" font-size="10" fill="#3d5a80" letter-spacing="4" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif">RISK · INTELLIGENCE · COMPLIANCE</text>
+    </svg>
+  </div>
+
+  <!-- ── COLORWAY 3: Teal / Green ── -->
+  <div class="label">Green</div>
+  <div class="cell dark">
+    <svg viewBox="0 0 560 110" xmlns="http://www.w3.org/2000/svg">
+      <!-- Road edges white -->
+      <line x1="55" y1="98" x2="82" y2="18" stroke="#ffffff" stroke-width="2"/>
+      <line x1="55" y1="98" x2="28" y2="18" stroke="#ffffff" stroke-width="2"/>
+      <polygon points="55,98 82,18 28,18" fill="#091410"/>
+      <!-- Dashes in teal -->
+      <line x1="55" y1="92" x2="55" y2="76" stroke="#00d4aa" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="55" y1="69" x2="55" y2="56" stroke="#00d4aa" stroke-width="2" stroke-linecap="round" opacity=".65"/>
+      <line x1="55" y1="51" x2="55" y2="41" stroke="#00d4aa" stroke-width="1.5" stroke-linecap="round" opacity=".38"/>
+      <line x1="55" y1="37" x2="55" y2="30" stroke="#00d4aa" stroke-width="1" stroke-linecap="round" opacity=".2"/>
+      <!-- Vanishing point teal with pulse rings -->
+      <circle cx="55" cy="18" r="5" fill="#00d4aa"/>
+      <circle cx="55" cy="18" r="11" fill="none" stroke="#00d4aa" stroke-width="1" opacity=".35"/>
+      <circle cx="55" cy="18" r="19" fill="none" stroke="#00d4aa" stroke-width="0.6" opacity=".15"/>
+      <line x1="126" y1="12" x2="126" y2="98" stroke="#1e2533" stroke-width="1"/>
+      <text x="148" y="58" font-size="46" font-weight="200" fill="#ffffff" letter-spacing="12" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif">NAVRIC</text>
+      <text x="150" y="80" font-size="10" fill="#4a5568" letter-spacing="4" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif">RISK · INTELLIGENCE · COMPLIANCE</text>
+    </svg>
+  </div>
+
+</div>

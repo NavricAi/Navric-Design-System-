@@ -1,0 +1,22 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:22px 26px;background:var(--canvas);color:var(--fg1);font-family:var(--font-sans);font-size:14px;-webkit-font-smoothing:antialiased}
+.lab{font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--fg3);margin:0 0 16px}
+.mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.row{display:flex;gap:14px;flex-wrap:wrap}
+[data-lucide]{width:1em;height:1em;stroke-width:1.75;vertical-align:middle}
+.hex{font-family:var(--font-mono);font-size:11.5px;color:var(--fg3);margin-top:7px;letter-spacing:-.01em}
+.nm{font-size:12.5px;font-weight:500;color:var(--fg1);margin-top:10px}
+.cap{font-size:11px;color:var(--fg3);margin-top:2px}
+</style></head><body class="navric">
+<p class="lab">Severity badge · the canonical triplet</p>
+<div class="row">
+  
+  <span style="display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border-radius:9999px;font-size:13px;font-weight:600;border:1px solid var(--sev-low-border);background:var(--sev-low-tint);color:var(--sev-low-ink)"><i data-lucide="shield-check"></i> Low</span>
+  <span style="display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border-radius:9999px;font-size:13px;font-weight:600;border:1px solid var(--sev-mod-border);background:var(--sev-mod-tint);color:var(--sev-mod-ink)"><i data-lucide="info"></i> Moderate</span>
+  <span style="display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border-radius:9999px;font-size:13px;font-weight:600;border:1px solid var(--sev-elev-border);background:var(--sev-elev-tint);color:var(--sev-elev-ink)"><i data-lucide="triangle-alert"></i> Elevated</span>
+  <span style="display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border-radius:9999px;font-size:13px;font-weight:600;border:1px solid var(--sev-sev-border);background:var(--sev-sev-tint);color:var(--sev-sev-ink)"><i data-lucide="octagon-alert"></i> Severe</span>
+</div><script>lucide.createIcons();</script></body></html>

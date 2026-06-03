@@ -1,0 +1,166 @@
+/* ============================================================================
+   NAVRIC — Carrier Risk Intelligence
+   colors_and_type.css — foundational + semantic design tokens
+   ----------------------------------------------------------------------------
+   Light is the default theme. Dark is a real, first-class theme (.dark / [data-theme="dark"]).
+   A quiet neutral canvas. Only two things are allowed to draw the eye:
+     1. risk-severity color (only where it carries a decision)
+     2. one accent — Indigo (#4F46E5)
+   Numbers use Geist Mono with tabular figures.
+   ============================================================================ */
+
+/* Geist + Geist Mono — the Navric typefaces.
+   NOTE: loaded from Google Fonts CDN; no local font files are bundled.
+   To ship offline, drop Geist / Geist Mono .woff2 into /fonts and swap @font-face. */
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* ---- Type families ---------------------------------------------------- */
+  --font-sans: 'Geist', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'SF Mono', 'JetBrains Mono', monospace;
+
+  /* ---- BRAND (fixed) ---------------------------------------------------- */
+  --navy:           #0B1437;   /* app chrome / deep ground */
+  --navy-700:       #15205A;
+  --navy-600:       #1E2C73;
+  --indigo:         #15205A;   /* PRIMARY action / accent / focus — "Navy ink", the only accent */
+  --indigo-hover:   #0B1437;
+  --indigo-active:  #060C20;
+  --indigo-light:   #2E3C7A;
+  --indigo-tint:    #EDF0F7;   /* selected / hover wash */
+  --indigo-tint-2:  #DCE2EF;
+  --teal:           #14B8A6;   /* ONLY for "improving" trend — never competes with risk */
+  --teal-text:      #0F766E;
+  --teal-tint:      #F0FDFA;
+
+  /* ---- SEVERITY RAMP (decision color only) ------------------------------
+     Three signals always travel together: color + icon + text label.
+     Solid = the canonical hue. Tint/border/ink = badge surfaces.            */
+  --sev-low:        #16A34A;  --sev-low-ink:   #15803D;  --sev-low-tint:   #F0FDF4;  --sev-low-border:   #BBF7D0;
+  --sev-moderate:   #D97706;  --sev-mod-ink:   #B45309;  --sev-mod-tint:   #FFFBEB;  --sev-mod-border:   #FDE68A;
+  --sev-elevated:   #EA580C;  --sev-elev-ink:  #C2410C;  --sev-elev-tint:  #FFF7ED;  --sev-elev-border:  #FED7AA;
+  --sev-severe:     #DC2626;  --sev-sev-ink:   #B91C1C;  --sev-sev-tint:   #FEF2F2;  --sev-sev-border:   #FECACA;
+
+  /* ---- NEUTRAL CANVAS (light) ------------------------------------------- */
+  --canvas:            #F8FAFC;   /* app background */
+  --surface:           #FFFFFF;   /* cards / panels (raised) */
+  --surface-container: #F1F5F9;   /* sunken wells, track fills */
+  --surface-hover:     #F8FAFC;
+
+  --border:            #E2E8F0;   /* hairline — primary separation device */
+  --border-strong:     #CBD5E1;
+  --border-faint:      #EEF2F6;
+
+  --fg1:  #0F172A;   /* primary text / headings */
+  --fg2:  #475569;   /* secondary text / labels */
+  --fg3:  #94A3B8;   /* muted / meta / captions */
+  --fg-on-accent: #FFFFFF;
+
+  /* ---- RADIUS (soft, never pill) ---------------------------------------- */
+  --radius-xs:  4px;
+  --radius-sm:  6px;
+  --radius:     8px;
+  --radius-md:  10px;
+  --radius-lg:  12px;   /* default card */
+  --radius-xl:  16px;   /* large card / panel */
+  --radius-2xl: 20px;
+
+  /* ---- ELEVATION — depth from layered surfaces + hairlines, not heavy shadow */
+  --shadow-xs:      0 1px 2px rgba(15,23,42,.04);
+  --shadow-sm:      0 1px 2px rgba(15,23,42,.04), 0 1px 3px rgba(15,23,42,.06);
+  --shadow-ambient: 0 4px 20px rgba(100,116,139,.06), 0 2px 8px rgba(100,116,139,.04);
+  --shadow-md:      0 8px 24px rgba(15,23,42,.08);
+  --shadow-pop:     0 12px 40px rgba(15,23,42,.12);
+
+  /* ---- FOCUS ------------------------------------------------------------ */
+  --ring: 0 0 0 3px rgba(21,32,90,.28);
+
+  /* ---- MOTION — fast & calm, no bounce ---------------------------------- */
+  --ease-out:  cubic-bezier(.2, 0, 0, 1);
+  --ease-in-out: cubic-bezier(.4, 0, .2, 1);
+  --dur-fast: 120ms;
+  --dur:      180ms;
+  --dur-slow: 260ms;
+
+  /* ---- TYPE SCALE (semantic) -------------------------------------------- */
+  --text-display: 600 40px/44px var(--font-sans);
+  --text-h1:      600 30px/36px var(--font-sans);
+  --text-h2:      600 22px/28px var(--font-sans);
+  --text-h3:      600 17px/24px var(--font-sans);
+  --text-body-lg: 400 16px/26px var(--font-sans);
+  --text-body:    400 14px/22px var(--font-sans);
+  --text-small:   400 13px/18px var(--font-sans);
+  --text-caption: 500 12px/16px var(--font-sans);
+  --tracking-tight: -0.02em;
+  --tracking-label: 0.08em;  /* uppercase eyebrow labels */
+}
+
+/* ============================================================================
+   DARK — first-class navy-grounded theme
+   ============================================================================ */
+.dark, [data-theme="dark"] {
+  --canvas:            #070B1C;   /* deep navy-black ground */
+  --surface:           #0E1533;
+  --surface-container: #141C3D;
+  --surface-hover:     #16204A;
+
+  --border:            #232C4E;
+  --border-strong:     #2E3A63;
+  --border-faint:      #1A2240;
+
+  --fg1:  #F1F5F9;
+  --fg2:  #A9B4CC;
+  --fg3:  #64748B;
+
+  --indigo:        #3A4A7A;   /* lift Navy ink for contrast on dark */
+  --indigo-hover:  #4A5C92;
+  --indigo-active: #2E3C66;
+  --indigo-light:  #56648F;
+  --indigo-tint:   #1A2348;
+  --indigo-tint-2: #232E5C;
+
+  /* Severity tints re-tuned for dark surfaces (color + icon + label still required) */
+  --sev-low-ink:   #4ADE80;  --sev-low-tint:   #0C2A1A;  --sev-low-border:   #14532D;
+  --sev-mod-ink:   #FBBF24;  --sev-mod-tint:   #2A1E08;  --sev-mod-border:   #713F12;
+  --sev-elev-ink:  #FB923C;  --sev-elev-tint:  #2A1608;  --sev-elev-border:  #7C2D12;
+  --sev-sev-ink:   #F87171;  --sev-sev-tint:   #2A0E0E;  --sev-sev-border:   #7F1D1D;
+
+  --teal-text:     #2DD4BF;  --teal-tint:      #0A2A26;
+
+  --shadow-sm:      0 1px 2px rgba(0,0,0,.4);
+  --shadow-ambient: 0 4px 20px rgba(0,0,0,.35), 0 2px 8px rgba(0,0,0,.3);
+  --shadow-md:      0 8px 24px rgba(0,0,0,.45);
+  --ring: 0 0 0 3px rgba(130,150,205,.42);
+}
+
+/* ============================================================================
+   SEMANTIC ELEMENT DEFAULTS — opt in by adding the .navric scope to a root node
+   ============================================================================ */
+.navric {
+  background: var(--canvas);
+  color: var(--fg1);
+  font: var(--text-body);
+  font-feature-settings: "cv11", "ss01";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.navric h1 { font: var(--text-h1); letter-spacing: var(--tracking-tight); color: var(--fg1); }
+.navric h2 { font: var(--text-h2); letter-spacing: var(--tracking-tight); color: var(--fg1); }
+.navric h3 { font: var(--text-h3); color: var(--fg1); }
+.navric p  { font: var(--text-body); color: var(--fg2); text-wrap: pretty; }
+
+/* numeric / id / code — always tabular */
+.navric .num,
+.navric .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+
+/* eyebrow label */
+.navric .eyebrow {
+  font: var(--text-caption);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--fg3);
+}
+
+/* focus-visible everywhere */
+.navric :focus-visible { outline: none; box-shadow: var(--ring); border-radius: var(--radius-sm); }

@@ -1,0 +1,22 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:22px 26px;background:var(--canvas);color:var(--fg1);font-family:var(--font-sans);font-size:14px;-webkit-font-smoothing:antialiased}
+.lab{font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--fg3);margin:0 0 16px}
+.mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.row{display:flex;gap:14px;flex-wrap:wrap}
+[data-lucide]{width:1em;height:1em;stroke-width:1.75;vertical-align:middle}
+.hex{font-family:var(--font-mono);font-size:11.5px;color:var(--fg3);margin-top:7px;letter-spacing:-.01em}
+.nm{font-size:12.5px;font-weight:500;color:var(--fg1);margin-top:10px}
+.cap{font-size:11px;color:var(--fg3);margin-top:2px}
+</style></head><body class="navric">
+<p class="lab">Dimension score · in use</p>
+<div style="display:grid;grid-template-columns:130px 50px 1fr 120px;gap:16px;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px">
+  <div><div style="font-size:14.5px;font-weight:500">Maintenance</div><div style="font-size:11px;color:var(--fg3);margin-top:2px">Vehicle OOS</div></div>
+  <div class="mono" style="font-size:26px;font-weight:600;text-align:right;color:var(--sev-sev-ink)">82</div>
+  <div><div style="height:7px;border-radius:9999px;background:var(--surface-container)"><div style="height:100%;width:82%;border-radius:9999px;background:var(--sev-severe)"></div></div>
+  <div class="mono" style="display:flex;justify-content:space-between;font-size:10px;color:var(--fg3);margin-top:5px"><span>0</span><span>100</span></div></div>
+  <span style="justify-self:end;display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:9999px;font-size:12px;font-weight:600;border:1px solid var(--sev-sev-border);background:var(--sev-sev-tint);color:var(--sev-sev-ink)"><i data-lucide="octagon-alert"></i> Severe</span>
+</div><script>lucide.createIcons();</script></body></html>

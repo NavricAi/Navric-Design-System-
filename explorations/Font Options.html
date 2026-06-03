@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Font options — Navric</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--canvas); color: var(--fg1); -webkit-font-smoothing: antialiased; padding: 36px 28px 64px; font-family: var(--font-sans); }
+  [data-lucide] { stroke-width: 1.75; width: 1em; height: 1em; }
+  .wrap { max-width: 1080px; margin: 0 auto; }
+  .head h1 { font: 600 26px/1.2 var(--font-sans); letter-spacing: -.02em; }
+  .head p { font-size: 14px; color: var(--fg2); margin-top: 8px; max-width: 660px; line-height: 1.55; }
+  .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 26px 28px; box-shadow: var(--shadow-sm); margin-top: 18px; }
+  .ptop { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+  .pname { font: 600 17px/1 var(--font-sans); }
+  .ptag { font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--indigo); background: var(--indigo-tint); border: 1px solid var(--indigo-tint-2); padding: 3px 9px; border-radius: 9999px; }
+  .pdesc { font-size: 12.5px; color: var(--fg3); margin-bottom: 20px; }
+  .stack { font-family: var(--ff); }
+  .stack .h { font-weight: 600; font-size: 30px; letter-spacing: -.02em; color: var(--fg1); }
+  .stack .verdict { display:inline-flex; align-items:center; gap:8px; margin-left:12px; font-size:15px; font-weight:600; color: var(--sev-elev-ink); }
+  .stack .body { font-size: 15px; line-height: 1.6; color: var(--fg2); margin-top: 12px; max-width: 560px; text-wrap: pretty; }
+  .nums { display: flex; gap: 30px; align-items: flex-start; margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--border-faint); }
+  .nums .big { font-family: var(--fm); font-variant-numeric: tabular-nums; font-size: 50px; font-weight: 600; letter-spacing: -.02em; color: var(--sev-sev-ink); line-height: 1; }
+  .nums .biglab { font-size: 11px; color: var(--fg3); margin-top: 4px; }
+  .nums .col { font-family: var(--fm); font-variant-numeric: tabular-nums; font-size: 14px; line-height: 1.9; color: var(--fg2); }
+  .nums .colr { font-family: var(--fm); font-variant-numeric: tabular-nums; font-size: 14px; line-height: 1.9; color: var(--fg1); text-align: right; border-left: 1px solid var(--border); padding-left: 22px; }
+  .ffname { font-family: var(--font-mono); font-size: 11px; color: var(--fg3); margin-top: 16px; }
+  .note { font-size: 12.5px; color: var(--fg3); margin-top: 16px; line-height: 1.55; }
+</style>
+</head>
+<body class="navric">
+<div class="wrap">
+  <div class="head">
+    <h1>Typeface options for Navric</h1>
+    <p>Three pairings — a neutral sans + a tabular mono — each shown on a heading, a verdict, body copy, and the numerics that fill this product (score, IDs, rates, deltas, a right-aligned column to test figure alignment). Numbers use the mono with <code>tabular-nums</code>.</p>
+  </div>
+  <div id="grid"></div>
+  <p class="note">All three are free (Google Fonts), so they load the same way Geist does now — no licensing step. My pick is <b>Geist + Geist Mono</b>: it's the closest to the Linear/Sana north star, genuinely neutral so severity color stays the loudest thing on screen, and Geist Mono's tabular figures are excellent for dense fleet data. IBM Plex reads more "engineered/compliance" if you want extra gravity; Hanken + JetBrains is a touch warmer and more distinctive.</p>
+</div>
+
+<script>
+  const PAIRS = [
+    { name: 'Geist + Geist Mono', tag: 'Recommended', ff: "'Geist', sans-serif", fm: "'Geist Mono', monospace",
+      desc: 'Vercel\u2019s neutral grotesque. Modern, quiet, Linear-adjacent. The brief\u2019s default.',
+      ffname: 'Geist 300\u2013700 · Geist Mono 400\u2013600' },
+    { name: 'IBM Plex Sans + IBM Plex Mono', tag: 'Most enterprise', ff: "'IBM Plex Sans', sans-serif", fm: "'IBM Plex Mono', monospace",
+      desc: 'One designed family. Technical, trustworthy, a little more engineered — fits compliance gravity.',
+      ffname: 'IBM Plex Sans 400\u2013700 · IBM Plex Mono 400\u2013600' },
+    { name: 'Hanken Grotesk + JetBrains Mono', tag: 'A touch warmer', ff: "'Hanken Grotesk', sans-serif", fm: "'JetBrains Mono', monospace",
+      desc: 'Humanist grotesque + the engineer\u2019s mono (used in the source app). Distinctive but still serious.',
+      ffname: 'Hanken Grotesk 400\u2013700 · JetBrains Mono 400\u2013600' },
+  ];
+  const grid = document.getElementById('grid');
+  PAIRS.forEach(p => {
+    const el = document.createElement('div');
+    el.className = 'panel';
+    el.style.cssText = `--ff:${p.ff}; --fm:${p.fm};`;
+    el.innerHTML = `
+      <div class="ptop"><span class="pname">${p.name}</span><span class="ptag">${p.tag}</span></div>
+      <div class="pdesc">${p.desc}</div>
+      <div class="stack">
+        <span class="h">Sunbelt Freight Logistics</span><span class="verdict"><i data-lucide="triangle-alert"></i> Elevated risk</span>
+        <div class="body">Driven primarily by maintenance: vehicle out-of-service rates have climbed for three consecutive quarters and now sit well above the national average.</div>
+        <div class="nums">
+          <div><div class="big">82</div><div class="biglab">risk index</div></div>
+          <div class="col">USDOT 2143875<br>23.4% national avg<br>+8.1 over threshold<br>4 days ago</div>
+          <div class="colr">1,204<br>82.0<br>9.7<br>148</div>
+        </div>
+        <div class="ffname">${p.ffname}</div>
+      </div>`;
+    grid.appendChild(el);
+  });
+  lucide.createIcons();
+</script>
+</body>
+</html>

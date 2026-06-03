@@ -1,0 +1,15 @@
+<svg viewBox="0 0 560 110" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Navric">
+  <line x1="55" y1="98" x2="82" y2="18" stroke="#E8EDF8" stroke-width="2"></line>
+  <line x1="55" y1="98" x2="28" y2="18" stroke="#E8EDF8" stroke-width="2"></line>
+  <polygon points="55,98 82,18 28,18" fill="#141C3D"></polygon>
+  <line x1="55" y1="92" x2="55" y2="76" stroke="#7C88B0" stroke-width="2.5" stroke-linecap="round"></line>
+  <line x1="55" y1="69" x2="55" y2="56" stroke="#7C88B0" stroke-width="2" stroke-linecap="round" opacity=".62"></line>
+  <line x1="55" y1="51" x2="55" y2="41" stroke="#7C88B0" stroke-width="1.5" stroke-linecap="round" opacity=".36"></line>
+  <line x1="55" y1="37" x2="55" y2="30" stroke="#7C88B0" stroke-width="1" stroke-linecap="round" opacity=".18"></line>
+  <circle cx="55" cy="18" r="5" fill="#7C88B0"></circle>
+  <circle cx="55" cy="18" r="11" fill="none" stroke="#7C88B0" stroke-width="1" opacity=".3"></circle>
+  <circle cx="55" cy="18" r="18" fill="none" stroke="#7C88B0" stroke-width=".6" opacity=".12"></circle>
+  <line x1="126" y1="14" x2="126" y2="96" stroke="#2E3A63" stroke-width="1"></line>
+  <text x="148" y="58" font-size="44" font-weight="300" fill="#F1F5F9" letter-spacing="11" font-family="Geist, &#39;Helvetica Neue&#39;, Helvetica, Arial, sans-serif">NAVRIC</text>
+  <text x="150" y="80" font-size="9.5" fill="#64748B" letter-spacing="4" font-family="Geist, &#39;Helvetica Neue&#39;, Helvetica, Arial, sans-serif">RISK · INTELLIGENCE · COMPLIANCE</text>
+</svg>

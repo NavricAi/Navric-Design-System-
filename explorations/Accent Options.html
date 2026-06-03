@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accent options — Navric</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--canvas); font-family: var(--font-sans); color: var(--fg1); -webkit-font-smoothing: antialiased; padding: 36px 28px 64px; }
+  [data-lucide] { stroke-width: 1.75; width: 1em; height: 1em; }
+  .wrap { max-width: 1080px; margin: 0 auto; }
+  .head h1 { font: 600 26px/1.2 var(--font-sans); letter-spacing: -.02em; }
+  .head p { font-size: 14px; color: var(--fg2); margin-top: 8px; max-width: 640px; line-height: 1.55; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 28px; }
+  .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 22px; box-shadow: var(--shadow-sm); }
+  .ptop { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+  .ptop .name { font-size: 15px; font-weight: 600; }
+  .rec { font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--ac); background: var(--ac-tint); border:1px solid color-mix(in srgb, var(--ac) 30%, transparent); padding: 3px 9px; border-radius: 9999px; }
+  .hexrow { display: flex; gap: 8px; margin: 14px 0 18px; }
+  .chip { flex:1; height: 30px; border-radius: 7px; }
+  .swhex { font-family: var(--font-mono); font-size: 11px; color: var(--fg3); margin-top: 6px; text-align:center; }
+  .cluster { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .btn { display:inline-flex; align-items:center; gap:7px; height: 36px; padding: 0 15px; border-radius: 8px; font: 500 13.5px/1 var(--font-sans); border: 1px solid transparent; cursor: pointer; white-space: nowrap; }
+  .btn-primary { background: var(--ac); color: #fff; }
+  .btn-ghost { background: var(--surface); color: var(--fg2); border-color: var(--border); }
+  .navpill { display:inline-flex; align-items:center; gap:8px; padding: 7px 12px; border-radius: 8px; font-size: 13px; font-weight: 500; color: var(--ac); background: var(--ac-tint); }
+  .link { color: var(--ac); font-size: 13.5px; font-weight: 500; cursor: pointer; }
+  .wl { display:inline-flex; align-items:center; gap:6px; font-size:12px; color: var(--ac); border:1px solid var(--ac); background: var(--ac-tint); padding: 4px 11px; border-radius: 9999px; }
+  .ring { height: 36px; flex:1; min-width: 150px; display:flex; align-items:center; padding: 0 12px; border-radius: 8px; background: var(--surface); border: 1px solid var(--ac); box-shadow: 0 0 0 3px var(--ac-ring); font-size: 13px; color: var(--fg2); }
+  .coexist { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border-faint); display:flex; align-items:center; gap: 10px; }
+  .coexist .l { font-size: 11.5px; color: var(--fg3); margin-right: 2px; }
+  .sev { display:inline-flex; align-items:center; gap:6px; padding:4px 10px; border-radius:9999px; font-size:12px; font-weight:600; border:1px solid var(--sev-sev-border); background: var(--sev-sev-tint); color: var(--sev-sev-ink); }
+  .note { font-size: 12.5px; color: var(--fg3); margin-top: 14px; line-height: 1.5; }
+</style>
+</head>
+<body class="navric">
+<div class="wrap">
+  <div class="head">
+    <h1>Accent options for Navric</h1>
+    <p>The same UI cluster — primary button, active nav, link, watchlist pill, focus ring — under four accent directions. A constant <b>Severe</b> badge sits in each so you can judge how the accent coexists with risk color. Severity must always win the eye.</p>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <p class="note">Why these: your severity ramp owns green + amber + orange + red, and teal is reserved for "improving." That leaves only the cool/blue family as conflict-free chromatic room — so the cleanest way to drop blue/purple is to go achromatic (ink). My pick is <b>Navy ink</b>: it reuses a brand color you already own (#0B1437), competes with nothing, and lets severity be the only hue on the screen.</p>
+</div>
+
+<script>
+  const OPTIONS = [
+    { name: 'Navy ink', tag: 'Recommended', ac: '#15205A', hover: '#0B1437', tint: '#EDF0F7', ring: 'rgba(11,20,55,.18)', chips: ['#0B1437','#15205A','#1E2C73'], desc: 'Achromatic. Reuses brand Navy. Maximum calm.' },
+    { name: 'Graphite', tag: '', ac: '#334155', hover: '#1E293B', tint: '#F1F5F9', ring: 'rgba(51,65,85,.20)', chips: ['#1E293B','#334155','#475569'], desc: 'Slate ink. Neutral, understated, very Linear.' },
+    { name: 'Cobalt', tag: 'If you want a touch of hue', ac: '#2563EB', hover: '#1D4ED8', tint: '#EFF5FF', ring: 'rgba(37,99,235,.30)', chips: ['#1D4ED8','#2563EB','#3B82F6'], desc: 'A clean, confident blue — reads far less purple than indigo.' },
+    { name: 'Indigo (current)', tag: '', ac: '#4F46E5', hover: '#4338CA', tint: '#EEF2FF', ring: 'rgba(79,70,229,.30)', chips: ['#4338CA','#4F46E5','#6366F1'], desc: 'The current accent, for comparison.' },
+  ];
+
+  const grid = document.getElementById('grid');
+  OPTIONS.forEach(o => {
+    const p = document.createElement('div');
+    p.className = 'panel';
+    p.style.cssText = `--ac:${o.ac}; --ac-hover:${o.hover}; --ac-tint:${o.tint}; --ac-ring:${o.ring};`;
+    p.innerHTML = `
+      <div class="ptop">
+        <span class="name">${o.name}</span>
+        ${o.tag ? `<span class="rec">${o.tag}</span>` : ''}
+      </div>
+      <div style="font-size:12.5px;color:var(--fg3)">${o.desc}</div>
+      <div class="hexrow">
+        ${o.chips.map(c=>`<div><div class="chip" style="background:${c}"></div><div class="swhex">${c}</div></div>`).join('')}
+      </div>
+      <div class="cluster">
+        <button class="btn btn-primary"><i data-lucide="bell-plus"></i> Add to watchlist</button>
+        <button class="btn btn-ghost"><i data-lucide="download"></i> Export</button>
+        <span class="navpill"><i data-lucide="layout-dashboard"></i> Dashboard</span>
+        <span class="wl"><i data-lucide="bell"></i> Tracking</span>
+        <span class="link">View methodology</span>
+      </div>
+      <div style="margin-top:12px;display:flex;gap:10px"><div class="ring"><i data-lucide="search" style="margin-right:8px;color:var(--fg3)"></i> Focused field</div></div>
+      <div class="coexist">
+        <span class="l">Coexists with severity:</span>
+        <span class="sev"><i data-lucide="octagon-alert"></i> Severe</span>
+        <span style="font-family:var(--font-mono);font-weight:600;color:var(--sev-sev-ink);font-size:15px">82</span>
+      </div>`;
+    grid.appendChild(p);
+  });
+  lucide.createIcons();
+</script>
+</body>
+</html>

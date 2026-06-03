@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carrier Risk Profile — Navric</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: var(--canvas); }
+  body { font: var(--text-body); color: var(--fg1); -webkit-font-smoothing: antialiased; }
+  .num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+  .eyebrow { font: var(--text-caption); text-transform: uppercase; letter-spacing: var(--tracking-label); color: var(--fg3); white-space: nowrap; }
+  a { color: inherit; text-decoration: none; }
+  [data-lucide] { width: 1em; height: 1em; stroke-width: 1.75; }
+
+  /* ---- App chrome ---- */
+  .app { min-height: 100vh; display: flex; flex-direction: column; }
+  .topbar {
+    height: 56px; display: flex; align-items: center; gap: 20px;
+    padding: 0 24px; background: var(--surface); border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 20;
+  }
+  .topbar .brand { display: flex; align-items: center; gap: 9px; color: var(--fg1); }
+  .topbar .mark { height: 24px; width: 24px; color: var(--fg1); }
+  .topbar .wordmark { font-family: var(--font-sans); font-weight: 300; font-size: 18px; letter-spacing: 0.22em; color: var(--fg1); }
+  .topbar .sep { width: 1px; height: 22px; background: var(--border); }
+  .crumb { display: flex; align-items: center; gap: 6px; color: var(--fg2); font-size: 13px; }
+  .crumb:hover { color: var(--fg1); }
+  .topbar .spacer { flex: 1; }
+  .icon-btn {
+    width: 34px; height: 34px; display: grid; place-items: center; border-radius: var(--radius);
+    color: var(--fg2); background: transparent; border: 1px solid transparent; cursor: pointer;
+    transition: background var(--dur) var(--ease-out), color var(--dur) var(--ease-out);
+    font-size: 17px;
+  }
+  .icon-btn:hover { background: var(--surface-container); color: var(--fg1); }
+  .avatar {
+    width: 30px; height: 30px; border-radius: 9999px; background: var(--indigo);
+    color: #fff; display: grid; place-items: center; font-size: 11px; font-weight: 600;
+    font-family: var(--font-mono);
+  }
+
+  .wrap { width: 100%; max-width: 1180px; margin: 0 auto; padding: 28px 24px 80px; }
+
+  /* ---- Buttons ---- */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 16px;
+    border-radius: var(--radius); font: 500 14px/1 var(--font-sans); cursor: pointer;
+    border: 1px solid transparent; transition: all var(--dur) var(--ease-out);
+    white-space: nowrap;
+  }
+  .btn[data-lucide], .btn [data-lucide] { font-size: 16px; }
+  .btn-primary { background: var(--indigo); color: #fff; box-shadow: var(--shadow-xs); }
+  .btn-primary:hover { background: var(--indigo-hover); }
+  .btn-primary:active { transform: scale(.985); background: var(--indigo-active); }
+  .btn-ghost { background: var(--surface); color: var(--fg2); border-color: var(--border); }
+  .btn-ghost:hover { color: var(--fg1); border-color: var(--border-strong); background: var(--surface-hover); }
+
+  /* ---- Cards ---- */
+  .card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
+  .card-pad { padding: 22px 24px; }
+
+  /* ---- Identity header ---- */
+  .head { display: flex; gap: 28px; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; }
+  .head h1 { font: var(--text-h1); letter-spacing: var(--tracking-tight); margin-bottom: 8px; }
+  .meta { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; color: var(--fg2); font-size: 13.5px; }
+  .meta .num { color: var(--fg2); }
+  .dot-sep { color: var(--fg3); }
+  .auth {
+    display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500;
+    color: var(--teal-text); background: var(--teal-tint); border: 1px solid color-mix(in srgb, var(--teal) 30%, transparent);
+    padding: 2px 9px; border-radius: 9999px;
+  }
+  .auth [data-lucide] { font-size: 13px; color: var(--teal); }
+
+  /* verdict block */
+  .verdict {
+    display: flex; flex-direction: column; align-items: flex-end; gap: 14px; min-width: 280px;
+  }
+  .verdict-row { display: flex; align-items: center; gap: 14px; }
+  .verdict-badge {
+    display: inline-flex; align-items: center; gap: 9px; padding: 9px 15px; border-radius: var(--radius-md);
+    font-size: 15px; font-weight: 600; letter-spacing: -0.01em;
+  }
+  .verdict-badge [data-lucide] { font-size: 19px; }
+  .conf { font-size: 12.5px; color: var(--fg3); display: flex; align-items: center; gap: 6px; }
+  .conf strong { color: var(--fg2); font-weight: 600; }
+  .actions { display: flex; align-items: center; gap: 10px; }
+
+  /* ---- layout grid ---- */
+  .grid { display: grid; grid-template-columns: 1.55fr 1fr; gap: 20px; margin-top: 20px; align-items: start; }
+  @media (max-width: 940px) { .grid { grid-template-columns: 1fr; } .verdict { align-items: flex-start; } }
+
+  .card-title { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+  .card-title h2 { font: var(--text-h3); }
+  .link { font-size: 12.5px; color: var(--indigo); font-weight: 500; }
+  .link:hover { color: var(--indigo-hover); }
+
+  /* ---- dimension rows ---- */
+  .dims { margin-top: 14px; display: flex; flex-direction: column; }
+  .dim {
+    display: grid; grid-template-columns: 150px 56px 1fr 132px; gap: 18px; align-items: center;
+    padding: 16px 0; border-top: 1px solid var(--border-faint);
+  }
+  .dim:first-child { border-top: none; }
+  .dim-name { font-size: 14.5px; font-weight: 500; color: var(--fg1); }
+  .dim-sub { font-size: 11.5px; color: var(--fg3); margin-top: 2px; }
+  .dim-score { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 26px; font-weight: 600; letter-spacing: -0.02em; text-align: right; }
+  .track { height: 7px; border-radius: 9999px; background: var(--surface-container); overflow: hidden; position: relative; }
+  .track-fill { height: 100%; border-radius: 9999px; }
+  .track-scale { display: flex; justify-content: space-between; font-size: 10px; color: var(--fg3); margin-top: 5px; font-family: var(--font-mono); }
+  .sev-badge {
+    display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 9999px;
+    font-size: 12px; font-weight: 600; justify-self: end; border: 1px solid;
+  }
+  .sev-badge [data-lucide] { font-size: 14px; }
+
+  /* severity tokens */
+  .sev-severe   { color: var(--sev-sev-ink);  background: var(--sev-sev-tint);  border-color: var(--sev-sev-border); }
+  .sev-elevated { color: var(--sev-elev-ink); background: var(--sev-elev-tint); border-color: var(--sev-elev-border); }
+  .sev-moderate { color: var(--sev-mod-ink);  background: var(--sev-mod-tint);  border-color: var(--sev-mod-border); }
+  .sev-low      { color: var(--sev-low-ink);  background: var(--sev-low-tint);  border-color: var(--sev-low-border); }
+  .fill-severe   { background: var(--sev-severe); }
+  .fill-elevated { background: var(--sev-elevated); }
+  .fill-moderate { background: var(--sev-moderate); }
+  .fill-low      { background: var(--sev-low); }
+  .ink-severe { color: var(--sev-sev-ink); }
+
+  /* verdict badge uses elevated tone */
+  .verdict-badge.sev-elevated { background: var(--sev-elev-tint); border: 1px solid var(--sev-elev-border); }
+
+  /* ---- Executive summary ---- */
+  .summary p { font: var(--text-body-lg); color: var(--fg1); text-wrap: pretty; }
+  .summary .lede { font-weight: 500; }
+  .summary-meta {
+    margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--border-faint);
+    display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--fg3);
+  }
+  .summary-meta [data-lucide] { font-size: 14px; }
+
+  /* ---- trend chart ---- */
+  .chart-card { margin-top: 20px; }
+  .legend { display: flex; align-items: center; gap: 18px; margin-top: 2px; flex-wrap: wrap; }
+  .lg-item { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--fg2); }
+  .lg-swatch { width: 14px; height: 0; border-top-width: 2.5px; border-top-style: solid; }
+  .lg-line-dash { border-top-style: dashed; border-color: var(--fg3); }
+  svg.chart { width: 100%; height: auto; display: block; margin-top: 16px; overflow: visible; }
+  .chart text { font-family: var(--font-mono); font-variant-numeric: tabular-nums; fill: var(--fg3); font-size: 11px; }
+  .grid-line { stroke: var(--border-faint); stroke-width: 1; }
+  .axis-line { stroke: var(--border); stroke-width: 1; }
+  .thr-line { stroke: var(--fg3); stroke-width: 1; stroke-dasharray: 4 4; }
+  .thr-label { fill: var(--fg2); font-family: var(--font-sans); font-size: 11px; font-weight: 500; }
+  .ln-quiet { fill: none; stroke: var(--border-strong); stroke-width: 1.5; }
+  .ln-maint { fill: none; stroke: var(--sev-severe); stroke-width: 2.5; }
+  .endcap { fill: var(--sev-severe); }
+  .endlabel { fill: var(--sev-sev-ink); font-family: var(--font-mono); font-weight: 600; font-size: 12px; }
+
+  /* footnote */
+  .foot { margin-top: 22px; display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--fg3); }
+  .foot [data-lucide] { font-size: 14px; }
+  .foot a { color: var(--indigo); font-weight: 500; }
+</style>
+</head>
+<body class="navric">
+<div class="app">
+
+  <!-- ───────────── Top bar ───────────── -->
+  <header class="topbar">
+    <a href="#" class="brand" aria-label="Navric">
+      <img class="mark" id="logo" src="../assets/navric-mark.svg" alt="">
+      <span class="wordmark">NAVRIC</span>
+    </a>
+    <div class="sep"></div>
+    <a class="crumb" href="#"><i data-lucide="chevron-left"></i> Carriers</a>
+    <div class="spacer"></div>
+    <button class="icon-btn" id="themeToggle" title="Toggle theme" aria-label="Toggle theme"><i data-lucide="moon" id="themeIcon"></i></button>
+    <button class="icon-btn" title="Search" aria-label="Search"><i data-lucide="search"></i></button>
+    <div class="avatar">NS</div>
+  </header>
+
+  <div class="wrap">
+
+    <!-- ───────────── Identity + verdict + primary action ───────────── -->
+    <section class="card card-pad">
+      <div class="head">
+        <div>
+          <h1>Sunbelt Freight Logistics LLC</h1>
+          <div class="meta">
+            <span class="num">USDOT 2143875</span>
+            <span class="dot-sep">·</span>
+            <span>Laredo, TX</span>
+            <span class="dot-sep">·</span>
+            <span><span class="num">48</span> power units</span>
+            <span class="dot-sep">·</span>
+            <span><span class="num">61</span> drivers</span>
+            <span class="dot-sep">·</span>
+            <span class="auth"><i data-lucide="circle-check-big"></i> Authority Active</span>
+          </div>
+        </div>
+
+        <div class="verdict">
+          <div class="verdict-row">
+            <div>
+              <div class="eyebrow" style="text-align:right; margin-bottom:7px;">Overall verdict</div>
+              <span class="verdict-badge sev-elevated">
+                <i data-lucide="triangle-alert"></i> Elevated risk
+              </span>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn btn-ghost"><i data-lucide="download"></i> Export brief</button>
+            <button class="btn btn-primary"><i data-lucide="bell-plus"></i> Add to watchlist</button>
+          </div>
+          <div class="conf">
+            <i data-lucide="circle-gauge" style="font-size:14px;"></i>
+            Confidence: <strong>High</strong> <span class="dot-sep">·</span> data updated <strong>4 days ago</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────── Main grid ───────────── -->
+    <div class="grid">
+
+      <!-- LEFT: dimension scores -->
+      <div>
+        <section class="card card-pad">
+          <div class="card-title">
+            <h2>Risk by dimension</h2>
+            <a class="link" href="#">View methodology</a>
+          </div>
+          <p style="font-size:12.5px; color:var(--fg3); margin-top:2px;">0–100 risk index · higher is worse · ordered by severity</p>
+
+          <div class="dims" id="dims"></div>
+        </section>
+
+        <!-- Trend chart -->
+        <section class="card card-pad chart-card">
+          <div class="card-title">
+            <h2>12-month trend</h2>
+            <span class="eyebrow">Risk index</span>
+          </div>
+          <p style="font-size:12.5px; color:var(--fg3); margin-top:2px;">Maintenance is climbing into the severe band; other dimensions hold steady.</p>
+          <div class="legend">
+            <span class="lg-item"><span class="lg-swatch" style="border-color:var(--sev-severe);"></span> Maintenance</span>
+            <span class="lg-item"><span class="lg-swatch" style="border-color:var(--border-strong);"></span> Driver · Crash · Admin · Hazmat</span>
+            <span class="lg-item"><span class="lg-swatch lg-line-dash"></span> Intervention threshold (65)</span>
+          </div>
+          <svg class="chart" id="chart" viewBox="0 0 720 300" preserveAspectRatio="none" aria-label="12-month risk index trend"></svg>
+        </section>
+      </div>
+
+      <!-- RIGHT: executive summary (inline) -->
+      <div>
+        <section class="card card-pad summary">
+          <div class="card-title"><h2>Summary</h2></div>
+          <p style="margin-top:12px;">
+            <span class="lede">Sunbelt's elevated profile is driven primarily by maintenance:</span>
+            vehicle out-of-service rates have climbed for three consecutive quarters and now sit well above the national average.
+            Driver hours-of-service violations are a secondary concern; crash and administrative signals are within normal range.
+          </p>
+          <div class="summary-meta">
+            <i data-lucide="history"></i>
+            Reflects data updated 4 days ago · 24-month inspection window
+          </div>
+        </section>
+
+        <section class="card card-pad" style="margin-top:20px;">
+          <div class="eyebrow" style="margin-bottom:14px;">What changed</div>
+          <div id="changed"></div>
+        </section>
+      </div>
+    </div>
+
+    <div class="foot">
+      <i data-lucide="info"></i>
+      Internal screening score derived from public FMCSA data. Not an official safety rating, legal opinion, or underwriting decision.
+      <a href="#">How scoring works</a>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // ── Dimension data (worst-first) ──
+  const DIMS = [
+    { name: 'Maintenance', sub: 'Vehicle OOS · brake systems', score: 82, level: 'Severe',   icon: 'octagon-alert',  cls: 'severe'   },
+    { name: 'Driver',      sub: 'Hours-of-service · fitness',  score: 64, level: 'Elevated',  icon: 'triangle-alert', cls: 'elevated' },
+    { name: 'Crash',       sub: '24-month indicator',          score: 41, level: 'Moderate',  icon: 'info',           cls: 'moderate' },
+    { name: 'Admin',       sub: 'MCS-150 freshness',           score: 38, level: 'Moderate',  icon: 'info',           cls: 'moderate' },
+    { name: 'Hazmat',      sub: 'Placarding · handling',       score: 12, level: 'Low',       icon: 'shield-check',   cls: 'low'      },
+  ];
+
+  const dimsEl = document.getElementById('dims');
+  DIMS.forEach(d => {
+    const row = document.createElement('div');
+    row.className = 'dim';
+    row.innerHTML = `
+      <div>
+        <div class="dim-name">${d.name}</div>
+        <div class="dim-sub">${d.sub}</div>
+      </div>
+      <div class="dim-score ink-${d.cls === 'severe' ? 'severe' : ''}" style="${d.cls==='severe'?'color:var(--sev-sev-ink)':''}">${d.score}</div>
+      <div>
+        <div class="track"><div class="track-fill fill-${d.cls}" style="width:${d.score}%"></div></div>
+        <div class="track-scale"><span>0</span><span>100</span></div>
+      </div>
+      <span class="sev-badge sev-${d.cls}"><i data-lucide="${d.icon}"></i> ${d.level}</span>
+    `;
+    dimsEl.appendChild(row);
+  });
+
+  // ── What changed ──
+  const CHANGED = [
+    { dir:'up',   icon:'trending-up',   label:'Vehicle OOS rate',     detail:'3 consecutive quarters rising', tone:'severe' },
+    { dir:'up',   icon:'trending-up',   label:'HoS violations',       detail:'+2 in last 90 days',            tone:'elevated' },
+    { dir:'flat', icon:'minus',         label:'Crash indicator',      detail:'No change',                     tone:'flat' },
+  ];
+  const chEl = document.getElementById('changed');
+  CHANGED.forEach((c,i) => {
+    const color = c.tone==='severe' ? 'var(--sev-sev-ink)' : c.tone==='elevated' ? 'var(--sev-elev-ink)' : 'var(--fg3)';
+    const el = document.createElement('div');
+    el.style.cssText = `display:flex; align-items:center; gap:12px; padding:11px 0; ${i? 'border-top:1px solid var(--border-faint);':''}`;
+    el.innerHTML = `
+      <i data-lucide="${c.icon}" style="font-size:16px; color:${color};"></i>
+      <div style="flex:1;">
+        <div style="font-size:13.5px; font-weight:500; color:var(--fg1);">${c.label}</div>
+        <div style="font-size:11.5px; color:var(--fg3);">${c.detail}</div>
+      </div>`;
+    chEl.appendChild(el);
+  });
+
+  // ── Trend chart ──
+  const SERIES = {
+    maintenance: [58,60,59,63,66,64,69,72,74,77,80,82],
+    driver:      [61,62,60,63,64,62,65,63,64,65,63,64],
+    crash:       [44,43,45,42,41,43,40,42,41,40,42,41],
+    admin:       [40,39,41,38,40,39,38,39,37,38,39,38],
+    hazmat:      [14,13,15,12,13,11,12,13,12,11,13,12],
+  };
+  const MONTHS = ['Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr','May','Jun'];
+
+  (function drawChart(){
+    const svg = document.getElementById('chart');
+    const W=720, H=300, padL=34, padR=44, padT=14, padB=34;
+    const plotW = W-padL-padR, plotH = H-padT-padB;
+    const yMin=0, yMax=100;
+    const x = i => padL + (i/(MONTHS.length-1))*plotW;
+    const y = v => padT + (1-(v-yMin)/(yMax-yMin))*plotH;
+    const NS='http://www.w3.org/2000/svg';
+    const add=(t,a)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);svg.appendChild(e);return e;};
+    const path=d=>d.map((v,i)=>`${i?'L':'M'}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' ');
+
+    // horizontal gridlines + y labels
+    [0,25,50,75,100].forEach(g=>{
+      add('line',{class:'grid-line',x1:padL,y1:y(g),x2:W-padR,y2:y(g)});
+      const t=add('text',{x:padL-8,y:y(g)+4,'text-anchor':'end'});t.textContent=g;
+    });
+    // x labels
+    MONTHS.forEach((m,i)=>{ const t=add('text',{x:x(i),y:H-padB+18,'text-anchor':'middle'}); t.textContent=m; });
+    // axis baseline
+    add('line',{class:'axis-line',x1:padL,y1:y(0),x2:W-padR,y2:y(0)});
+
+    // threshold (65)
+    add('line',{class:'thr-line',x1:padL,y1:y(65),x2:W-padR,y2:y(65)});
+    const tl=add('text',{class:'thr-label',x:padL+4,y:y(65)-8,'text-anchor':'start'}); tl.textContent='Intervention threshold · 65';
+
+    // quiet lines
+    ['driver','crash','admin','hazmat'].forEach(k=> add('path',{class:'ln-quiet',d:path(SERIES[k])}) );
+    // maintenance (decision color)
+    add('path',{class:'ln-maint',d:path(SERIES.maintenance)});
+    // end cap + label
+    const last=SERIES.maintenance.length-1;
+    add('circle',{class:'endcap',cx:x(last),cy:y(SERIES.maintenance[last]),r:4});
+    const el=add('text',{class:'endlabel',x:x(last)+8,y:y(SERIES.maintenance[last])+4,'text-anchor':'start'}); el.textContent='82';
+  })();
+
+  // ── Theme toggle ──
+  const root = document.documentElement;
+  const saved = localStorage.getItem('navric-theme');
+  if (saved) { root.setAttribute('data-theme', saved); root.classList.toggle('dark', saved==='dark'); }
+  function syncTheme(){
+    const dark = root.getAttribute('data-theme')==='dark';
+    document.getElementById('themeIcon').setAttribute('data-lucide', dark ? 'sun' : 'moon');
+    if (window.__applyAccent) window.__applyAccent();
+    lucide.createIcons();
+  }
+  document.getElementById('themeToggle').addEventListener('click', ()=>{
+    const dark = root.getAttribute('data-theme')!=='dark';
+    root.setAttribute('data-theme', dark?'dark':'light');
+    root.classList.toggle('dark', dark);
+    localStorage.setItem('navric-theme', dark?'dark':'light');
+    syncTheme();
+  });
+
+  lucide.createIcons();
+  syncTheme();
+</script>
+
+<!-- ── Accent tweak (React island) ── -->
+<div id="tweak-root"></div>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel">
+  const ACCENTS = {
+    navy:     { light: { base:'#15205A', hover:'#0B1437', active:'#060C20', tint:'#EDF0F7', tint2:'#DCE2EF', ring:'rgba(11,20,55,.20)' },  dark: { base:'#3A4A7A', hover:'#4A5C92', active:'#2E3C66', tint:'#1A2348', tint2:'#232E5C', ring:'rgba(130,150,205,.42)' } },
+    graphite: { light: { base:'#334155', hover:'#1E293B', active:'#0F172A', tint:'#F1F5F9', tint2:'#E2E8F0', ring:'rgba(51,65,85,.22)' },   dark: { base:'#566279', hover:'#697590', active:'#454F66', tint:'#1B2236', tint2:'#262F45', ring:'rgba(130,145,170,.42)' } },
+    cobalt:   { light: { base:'#2563EB', hover:'#1D4ED8', active:'#1E40AF', tint:'#EFF5FF', tint2:'#DBE8FE', ring:'rgba(37,99,235,.32)' },   dark: { base:'#3B82F6', hover:'#60A5FA', active:'#2563EB', tint:'#13244A', tint2:'#1B2F5C', ring:'rgba(59,130,246,.45)' } },
+    indigo:   { light: { base:'#4F46E5', hover:'#4338CA', active:'#3730A3', tint:'#EEF2FF', tint2:'#E0E7FF', ring:'rgba(79,70,229,.32)' },   dark: { base:'#6366F1', hover:'#818CF8', active:'#4F46E5', tint:'#1B2150', tint2:'#232C66', ring:'rgba(99,102,241,.45)' } },
+  };
+  function applyAccent(key) {
+    const a = ACCENTS[key] || ACCENTS.indigo;
+    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const c = dark ? a.dark : a.light;
+    const s = document.documentElement.style;
+    s.setProperty('--indigo', c.base);
+    s.setProperty('--indigo-hover', c.hover);
+    s.setProperty('--indigo-active', c.active);
+    s.setProperty('--indigo-light', c.hover);
+    s.setProperty('--indigo-tint', c.tint);
+    s.setProperty('--indigo-tint-2', c.tint2);
+    s.setProperty('--ring', '0 0 0 3px ' + c.ring);
+  }
+
+  function TweaksApp() {
+    const [t, setTweak] = useTweaks(/*EDITMODE-BEGIN*/{
+      "accent": "graphite"
+    }/*EDITMODE-END*/);
+    React.useEffect(() => {
+      window.__applyAccent = () => applyAccent(t.accent);
+      applyAccent(t.accent);
+    }, [t.accent]);
+    return (
+      <TweaksPanel title="Tweaks">
+        <TweakSection label="Accent" />
+        <TweakSelect label="Color" value={t.accent}
+          options={[
+            { value: 'navy',     label: 'Navy ink — default' },
+            { value: 'graphite', label: 'Graphite' },
+            { value: 'cobalt',   label: 'Cobalt' },
+            { value: 'indigo',   label: 'Indigo' },
+          ]}
+          onChange={(v) => setTweak('accent', v)} />
+      </TweaksPanel>
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('tweak-root')).render(<TweaksApp />);
+</script>
+</body>
+</html>
